@@ -72,4 +72,5 @@ public class Users {
     public int hashCode() {
         return Objects.hash(name, position, role, departmentId, id);
     }
+
 }

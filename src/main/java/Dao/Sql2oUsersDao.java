@@ -6,6 +6,8 @@ import org.sql2o.Connection;
 import org.sql2o.Sql2o;
 import org.sql2o.Sql2oException;
 
+import java.util.List;
+
 public class Sql2oUsersDao implements UsersDao {
     private final Sql2o sql2o;
 
@@ -31,4 +33,28 @@ public class Sql2oUsersDao implements UsersDao {
         }
 
     }
+
+    @Override
+    public List<Users> getAll() {
+        try (Connection conn = sql2o.open()) {
+            return conn.createQuery("SELECT * FROM users")
+                    .executeAndFetch(Users.class);
+        }
+    }
+
+    @Override
+    public List<Users> getAllUsersForADepartment(int departmentId) {
+        return null;
+    }
+
+    @Override
+    public void deleteById(int id) {
+
+    }
+
+    @Override
+    public void clearAll() {
+
+    }
+
 }
