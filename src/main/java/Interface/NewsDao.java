@@ -1,6 +1,9 @@
 package Interface;
 
+import module.Department;
 import module.News;
+
+import java.util.List;
 
 public interface NewsDao {
     //create
