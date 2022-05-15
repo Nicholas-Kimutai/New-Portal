@@ -1,5 +1,7 @@
 package module;
 
+import java.util.Objects;
+
 public class Department {
     private String name;
     private  String description;
@@ -42,5 +44,21 @@ public class Department {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Department that = (Department) o;
+        return numberOfEmployees == that.numberOfEmployees &&
+                id == that.id &&
+                name.equals(that.name) &&
+                description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, numberOfEmployees, id);
     }
 }
