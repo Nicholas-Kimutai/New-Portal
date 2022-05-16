@@ -11,10 +11,16 @@ import static org.junit.Assert.*;
 
 import org.sql2o.Sql2o;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Sql2oDepartmentDaoTest {
     private static Sql2oDepartmentDao departmentDao;
     private static Sql2oNewsDao newsDao;
     private static Connection conn;
+
+    public Sql2oDepartmentDaoTest (Sql2o sql2o) {
+    }
 
     @BeforeClass
     public static void setUp() throws Exception {
@@ -59,6 +65,49 @@ public class Sql2oDepartmentDaoTest {
         assertEquals(2, departmentDao.getAll().size());
     }
 
+    @Test
+    public void deleteById() throws Exception {
+        Department testDepartment = setupDepartment();
+        Department otherDepartment = setupDepartment();
+        assertEquals(2, departmentDao.getAll().size());
+        departmentDao.deleteById(testDepartment.getId());
+        assertEquals(1, departmentDao.getAll().size());
+    }
+
+    @Test
+    public void clearAll() throws Exception {
+        Department testDepartment = setupDepartment();
+        Department otherDepartment = setupDepartment();
+        departmentDao.clearAll();
+        assertEquals(0, departmentDao.getAll().size());
+    }
+    @Test
+    public void getAllNewsForADepartmentReturnsNewsCorrectly() throws Exception {
+        News news  = new News("The Cliff");
+        newsDao.add(news);
+
+        News otherNews  = new News("The rush hour");
+        newsDao.add(otherNews);
+
+        Department department = setupDepartment();
+        departmentDao.add(department);
+        departmentDao.addDepartmentToNews(department,news);
+        departmentDao.addDepartmentToNews(department,otherNews);
+
+        News[] testNews = {news, otherNews};
+        List<News> test2News = departmentDao.getAllNewsForADepartment(department.getId());
+        for (News n:test2News
+        ) {
+
+            System.out.println("from dao "+n.getPost());
+
+        }
+        assertEquals(2,departmentDao.getAllNewsForADepartment(department.getId()).size());
+
+        assertEquals(Arrays.asList(testNews), departmentDao.getAllNewsForADepartment(department.getId()));
+    }
 
 
+    public void add(Department department) {
+    }
 }

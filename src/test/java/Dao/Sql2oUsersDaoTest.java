@@ -1,5 +1,6 @@
 package Dao;
 
+import module.Department;
 import module.Users;
 import org.sql2o.Connection;
 import static org.junit.Assert.*;
@@ -34,17 +35,60 @@ public class Sql2oUsersDaoTest {
         System.out.println("connection closed");
     }
 
-    @Test
-    public void getAll() throws Exception {
-        Users user1 = setupUsers();
-        Users user2 = setupUsers();
-        assertEquals(2, usersDao.getAll().size());
+    //helpers
+    public Users setupUser(){
+        Users user = new Users("larry","manager","news anchor",1);
+        usersDao.add(user);
+        return  user;
     }
 
-    public Users setupUsers() {
-        Users user = new Users("Nick","manager","Editor",department.getId());
+    public Users  setupUserForADepartment(Department department){
+        Users user = new Users("larry","manager","news anchor",department.getId());
         usersDao.add(user);
         return user;
     }
+
+    public Department setupDepartment(){
+        Department department =  new Department("technology","build tech",20);
+        departmentDao.add(department);
+        return department;
+    }
+
+    //Tests
+//    @Test
+//    public void getAll() throws Exception {
+//        Users user1 = setupUsers();
+//        Users user2 = setupUsers();
+//        assertEquals(2, usersDao.getAll().size());
+//    }
+    @Test
+    public void getAllUsersForADepartment() throws Exception {
+        Department department1 = setupDepartment();
+        Department department2 = setupDepartment();
+        Users user1 = setupUserForADepartment(department1);
+        Users user2 = setupUserForADepartment(department1);
+        Users otherUser = setupUserForADepartment(department2);
+
+        assertEquals(2, usersDao.getAllUsersForADepartment(department1.getId()).size());
+    }
+
+    @Test
+    public void deleteById() throws Exception {
+        Users testUser = setupUser();
+        Users otherUser = setupUser();
+        assertEquals(2, usersDao.getAll().size());
+        usersDao.deleteById(testUser.getId());
+        assertEquals(1, usersDao.getAll().size());
+    }
+
+    @Test
+    public void clearAll() throws Exception {
+        Users testUser = setupUser();
+        Users otherUser = setupUser();
+        usersDao.clearAll();
+        assertEquals(0, usersDao.getAll().size());
+    }
+
+
 
 }
