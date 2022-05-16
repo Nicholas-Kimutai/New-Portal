@@ -44,16 +44,34 @@ public class Sql2oUsersDao implements UsersDao {
 
     @Override
     public List<Users> getAllUsersForADepartment(int departmentId) {
-        return null;
+        try (Connection conn = sql2o.open()){
+            return conn.createQuery("SELECT * FROM users WHERE departmentId = :departmentId")
+                    .addParameter("departmentId",departmentId)
+                    .executeAndFetch(Users.class);
+        }
     }
 
     @Override
     public void deleteById(int id) {
+        String sql = "DELETE from users WHERE id = :id";
+        try  (Connection conn = sql2o.open()){
+            conn.createQuery(sql)
+                    .addParameter("id",id)
+                    .executeUpdate();
+        }catch (Sql2oException ex){
+            System.out.println(ex);
+        }
 
     }
 
     @Override
     public void clearAll() {
+        String sql = "DELETE from users";
+        try (Connection conn = sql2o.open()){
+            conn.createQuery(sql)
+                    .executeUpdate();
+        }catch (Sql2oException ex){
+            System.out.println(ex);
 
     }
 
