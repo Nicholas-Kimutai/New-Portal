@@ -10,13 +10,13 @@ import org.junit.*;
 public class Sql2oUsersDaoTest {
     private static Connection conn;
     private static Sql2oUsersDao usersDao;
-    private static Sql2oDepartmentDao departmentDao;
+    private static Sql2oDepartmentDaoTest departmentDao;
 
 
     @Before
     public void setUp() throws Exception{
 
-        departmentDao = new Sql2oDepartmentDao(DatabaseRule.sql2o);
+        departmentDao = new Sql2oDepartmentDaoTest(DatabaseRule.sql2o);
         usersDao = new Sql2oUsersDao(DatabaseRule.sql2o);
         conn = DatabaseRule.sql2o.open();
 
