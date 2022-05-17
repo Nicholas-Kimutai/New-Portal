@@ -3,6 +3,6 @@ package Dao;
 import org.sql2o.Sql2o;
 
 public class DB {
-    public static Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/news_portal", "moringa", "nic5622");
+    public static Sql2o sql2o = new Sql2o("jdbc:postgresql://localhost:5432/news_site", "moringa", "nic5622");
 
 }

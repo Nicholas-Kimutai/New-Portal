@@ -53,7 +53,7 @@ public class App {
                 return gson.toJson(String.format("Department '%s' and News '%s' have been associated",news.getPost(), department.getName()));
             }
             else {
-                throw new ApiException(404, String.format("Restaurant or Foodtype does not exist"));
+                throw new ApiException(404, String.format("Department does not exist"));
             }
         });
 
