@@ -67,7 +67,7 @@ public class Sql2oNewsDao implements NewsDao {
                     .addParameter("newsId", id)
                     .executeAndFetch(Integer.class);
             for (Integer departmentId : departmentIds){
-                String departmentQuery = "SELECT * FROM departments WHERE id = :departmentId";
+                String departmentQuery = "SELECT * FROM departments_units WHERE id = :departmentId";
                 departments.add(
                         con.createQuery(departmentQuery)
                                 .addParameter("departmentId", departmentId)
